@@ -1924,7 +1924,7 @@ inline void set_lpf(uint8_t f){
     uint8_t lpf_io = (f > 12) ? IO0_3 : (f > 8) ? IO0_5 : (f > 5) ? IO0_7 : (f > 4) ? IO1_1 : /*(f <= 4)*/ IO1_3; // cut-off freq in MHz to IO port of LPF relay
     if(prev_lpf_io != lpf_io){ set_latch(prev_lpf_io, IO0_1, false); set_latch(lpf_io, IO0_1); prev_lpf_io = lpf_io; };  // set relay
   #endif
-#else //LPF_SWITHCHING_TRUSDX
+#else //LPF_SWITHCHING_TRUSDX - verified with multimeter
   uint8_t lpf_io = (f > 12) ? IO1_3 : (f > 8) ? IO1_2 : (f > 5) ? IO1_4 : (f > 4) ? IO1_1 : /*(f <= 4)*/ IO1_5; // cut-off freq in MHz to IO port of LPF relay
   if(prev_lpf_io != lpf_io){ set_latch(prev_lpf_io, IO0_0, false); set_latch(lpf_io, IO0_0); prev_lpf_io = lpf_io; };  // set relay
 #endif
