@@ -15,10 +15,11 @@
 //#define F_XTAL  25000000   // 25MHz SI5351 crystal  (enable for 25MHz TCXO)
 //#define SWAP_ROTARY    1   // Swap rotary direction (enable for WB2CBA-uSDX)
 //#define QCX            1   // Supports older (non-SDR) QCX HW modifications (QCX, QCX-SSB, QCX-DSP with I/Q alignment-feature)
-//#define OLED_SSD1306   1   // OLED display (SSD1306 128x32 or 128x64), connect SDA (PD2), SCL (PD3)
+#define OLED_SSD1306   1   // OLED display (SSD1306 128x32 or 128x64), connect SDA (PD2), SCL (PD3)
 //#define OLED_SH1106    1   // OLED display (SH1106 1.3" inch display), connect SDA (PD2), SCL (PD3), NOTE that this display is pretty slow
 //#define LCD_I2C        1   // LCD with I2C (PCF8574 module          ), connect SDA (PD2), SCL (PD3), NOTE that this display is pretty slow
-#define LPF_SWITCHING_DL2MAN_USDX_REV3           1   // Enable 8-band filter bank switching:     latching relays wired to a TCA/PCA9555 GPIO extender on the PC4/PC5 I2C bus; relays are using IO0.0 as common (ground), IO1.0..7 used by the individual latches K0-7 switching respectively LPFs for 10m, 15m, 17m, 20m, 30m, 40m, 60m, 80m
+#define LPF_SWITHCHING_TRUSDX                   1   // Enable 5-band filter bank switching: Compatible with a (TR)uSDX. Latching relays (AXICOM IM43) wired to a PCA9555 GPIO expander on the PC4/PC5 I2C bus; relays are using IOO_0 as ground, IO1_5, IO1_1, IO1_4, IO1_2, IO1_3 used by the relays for 80m, 60m, 40m, 30m and 20m respectively. 
+//#define LPF_SWITCHING_DL2MAN_USDX_REV3           1   // Enable 8-band filter bank switching:     latching relays wired to a TCA/PCA9555 GPIO extender on the PC4/PC5 I2C bus; relays are using IO0.0 as common (ground), IO1.0..7 used by the individual latches K0-7 switching respectively LPFs for 10m, 15m, 17m, 20m, 30m, 40m, 60m, 80m
 //#define LPF_SWITCHING_DL2MAN_USDX_REV3_NOLATCH 1   // Enable 8-band filter bank switching: non-latching relays wired to a TCA/PCA9555 GPIO extender on the PC4/PC5 I2C bus; relays are using IO0.0 as common (ground), IO1.0..7 used by the individual latches K0-7 switching respectively LPFs for 10m, 15m, 17m, 20m, 30m, 40m, 60m, 80m. Enable this if you are using 8-band non-latching version for the relays, the radio will draw extra 15mA current but will work ity any relay (Tnx OH2UDS/TA7W Baris)
 //#define LPF_SWITCHING_DL2MAN_USDX_REV2         1   // Enable 5-band filter bank switching:     latching relays wired to a TCA/PCA9555 GPIO extender on the PC4/PC5 I2C bus; relays are using IO0.1 as common (ground), IO0.3, IO0.5, IO0.7, IO1.1, IO1.3 used by the individual latches K1-5 switching respectively LPFs for 20m, 30m, 40m, 60m, 80m
 //#define LPF_SWITCHING_DL2MAN_USDX_REV2_BETA    1   // Enable 5-band filter bank switching:     latching relays wired to a PCA9539PW   GPIO extender on the PC4/PC5 I2C bus; relays are using IO0.1 as common (ground), IO0.3, IO0.5, IO0.7, IO1.1, IO1.3 used by the individual latches K1-5 switching respectively LPFs for 20m, 30m, 40m, 60m, 80m
@@ -29,10 +30,10 @@
 //#define F_MCU   16000000   // 16MHz ATMEGA328P crystal (enable for unmodified Arduino Uno/Nano boards with 16MHz crystal). You may change this value to any other crystal frequency (up to 28MHz may work)
 
 // Advanced configuration switches
-//#define CONDENSED      1   // Display in 4 line mode (for OLED and LCD2004 modules)
+#define CONDENSED      1   // Display in 4 line mode (for OLED and LCD2004 modules)
 //#define CAT_EXT        1   // Extended CAT support: remote button and screen control commands over CAT
 //#define CAT_STREAMING  1   // Extended CAT support: audio streaming over CAT, once enabled and triggered with CAT cmd, samplerate 7812Hz, 8-bit unsigned audio is sent over UART. The ";" is omited in the data-stream, and only sent to indicate the beginning and end of a CAT cmd.
-#define CW_DECODER       1   // CW decoder
+//#define CW_DECODER       1   // CW decoder
 #define TX_ENABLE        1   // Disable this for RX only (no transmit), e.g. to support uSDX for kids idea: https://groups.io/g/ucx/topic/81030243#6276
 #define KEY_CLICK        1   // Reduce key clicks by envelope shaping
 #define SEMI_QSK         1   // Just after keying the transmitter, keeps the RX muted for a short amount of time in the anticipation for continued keying
@@ -59,29 +60,51 @@
 //#define F_CLK2  12000000   // Enables a fixed CLK2 clock output of choice (only applicable when TX_CLK0_CLK1 is enabled), e.g. for up-converter or to clock UART USB device
 
 // QCX pin defintions
-#define LCD_D4  0         //PD0    (pin 2)
-#define LCD_D5  1         //PD1    (pin 3)
-#define LCD_D6  2         //PD2    (pin 4)
-#define LCD_D7  3         //PD3    (pin 5)
-#define LCD_EN  4         //PD4    (pin 6)
-#define FREQCNT 5         //PD5    (pin 11)
-#define ROT_A   6         //PD6    (pin 12)
-#define ROT_B   7         //PD7    (pin 13)
-#define RX      8         //PB0    (pin 14)
-#define SIDETONE 9        //PB1    (pin 15)
-#define KEY_OUT 10        //PB2    (pin 16)
-#define SIG_OUT 11        //PB3    (pin 17)
-#define DAH     12        //PB4    (pin 18)
-#define DIT     13        //PB5    (pin 19)
-#define AUDIO1  14        //PC0/A0 (pin 23)
-#define AUDIO2  15        //PC1/A1 (pin 24)
-#define DVM     16        //PC2/A2 (pin 25)
-#define BUTTONS 17        //PC3/A3 (pin 26)
-#define LCD_RS  18        //PC4    (pin 27)
-#define SDA     18        //PC4    (pin 27)
-#define SCL     19        //PC5    (pin 28)
-//#define NTX   11        //PB3    (pin 17)
-//#define PTX   11        //PB3    (pin 17)
+// Added a if not defined for TRuSDX due to a change in pin definitions by the designer.
+#ifndef LPF_SWITHCHING_TRUSDX
+  #define LCD_D4  0         //PD0    (pin 2)
+  #define LCD_D5  1         //PD1    (pin 3)
+  #define LCD_D6  2         //PD2    (pin 4)
+  #define LCD_D7  3         //PD3    (pin 5)
+  #define LCD_EN  4         //PD4    (pin 6)
+  #define FREQCNT 5         //PD5    (pin 11)
+  #define ROT_A   6         //PD6    (pin 12)
+  #define ROT_B   7         //PD7    (pin 13)
+  #define RX      8         //PB0    (pin 14)
+  #define SIDETONE 9        //PB1    (pin 15)
+  #define KEY_OUT 10        //PB2    (pin 16)
+  #define SIG_OUT 11        //PB3    (pin 17)
+  #define DAH     12        //PB4    (pin 18)
+  #define DIT     13        //PB5    (pin 19)
+  #define AUDIO1  14        //PC0/A0 (pin 23)
+  #define AUDIO2  15        //PC1/A1 (pin 24)
+  #define DVM     16        //PC2/A2 (pin 25)
+  #define BUTTONS 17        //PC3/A3 (pin 26)
+  #define LCD_RS  18        //PC4    (pin 27)
+  #define SDA     18        //PC4    (pin 27)
+  #define SCL     19        //PC5    (pin 28)
+  //#define NTX   11        //PB3    (pin 17)
+  //#define PTX   11        //PB3    (pin 17)
+#else
+  //#define FREQCNT 5         //PD5    (pin 11) Commented out as I don't believe it's required in TRuSDX - to be removed if confirmed
+  #define ROT_A   6         //PD6    (pin 12)
+  #define ROT_B   7         //PD7    (pin 13)
+  #define RX      8         //PB0    (pin 14)
+  #define SIDETONE 9        //PB1    (pin 15) 
+  #define KEY_OUT 10        //PB2    (pin 16)
+  #define SIG_OUT 11        //PB3    (pin 17)
+  #define DAH     12        //PB4    (pin 18)
+  #define DIT     13        //PB5    (pin 19)
+  #define AUDIO1  14        //PC0/A0 (pin 23)
+  #define AUDIO2  15        //PC1/A1 (pin 24)
+  #define DVM     16        //PC2/A2 (pin 25)
+  #define BUTTONS 17        //PC3/A3 (pin 26)
+  #define LCD_RS  18        //PC4    (pin 27)
+  #define SDA     18        //PC4    (pin 27)
+  #define SCL     19        //PC5    (pin 28)
+  //#define NTX   11        //PB3    (pin 17)
+  //#define PTX   11        //PB3    (pin 17)
+#endif
 
 #ifdef SWAP_ROTARY
 #undef ROT_A
@@ -1855,7 +1878,7 @@ inline void set_lpf(uint8_t f){
 }
 #endif  //LPF_SWITCHING_DL2MAN_USDX_REV1
 
-#if defined(LPF_SWITCHING_DL2MAN_USDX_REV3) || defined(LPF_SWITCHING_DL2MAN_USDX_REV2) || defined(LPF_SWITCHING_DL2MAN_USDX_REV2_BETA)
+#if defined(LPF_SWITCHING_DL2MAN_USDX_REV3) || defined(LPF_SWITCHING_DL2MAN_USDX_REV2) || defined(LPF_SWITCHING_DL2MAN_USDX_REV2_BETA) || defined(LPF_SWITHCHING_TRUSDX)
 class IOExpander16 {
 public:
 #ifdef LPF_SWITCHING_DL2MAN_USDX_REV2_BETA
@@ -1865,6 +1888,9 @@ public:
   #define IOEXP16_ADDR  0x24  // TCA/PCA9555 with A2=1 A1..A0=0   https://www.ti.com/lit/ds/symlink/tca9555.pdf
 #endif
 #ifdef LPF_SWITCHING_DL2MAN_USDX_REV3
+  #define IOEXP16_ADDR  0x20  // TCA/PCA9555 with A2=0 A1..A0=0   https://www.ti.com/lit/ds/symlink/tca9555.pdf
+#endif
+#ifdef LPF_SWITHCHING_TRUSDX
   #define IOEXP16_ADDR  0x20  // TCA/PCA9555 with A2=0 A1..A0=0   https://www.ti.com/lit/ds/symlink/tca9555.pdf
 #endif
   inline void SendRegister(uint8_t reg, uint8_t val){ i2c.begin(); i2c.beginTransmission(IOEXP16_ADDR); i2c.write(reg); i2c.write(val); i2c.endTransmission(); }
@@ -1886,17 +1912,21 @@ void set_latch(uint8_t io, uint8_t common_io, bool latch = true){ // reset all l
 
 static uint8_t prev_lpf_io = 0xff; // inits and resets all latches
 inline void set_lpf(uint8_t f){
-#ifdef LPF_SWITCHING_DL2MAN_USDX_REV3
-  uint8_t lpf_io = (f > 26) ? IO1_3 : (f > 20) ? IO1_4 : (f > 17) ? IO1_2 : (f > 12) ? IO1_5 : (f > 8) ? IO1_1 : (f > 5) ? IO1_6 : (f > 4) ? IO1_0 : /*(f <= 4)*/ IO1_7; // cut-off freq in MHz to IO port of LPF relay
-#ifndef LPF_SWITCHING_DL2MAN_USDX_REV3_NOLATCH
-  if(prev_lpf_io != lpf_io){ set_latch(prev_lpf_io, IO0_0, false); set_latch(lpf_io, IO0_0); prev_lpf_io = lpf_io; };  // set relay (latched)
-#else
-  if(prev_lpf_io != lpf_io){ ioext.write(1U << lpf_io); prev_lpf_io = lpf_io; };  // set relay (non-latched)
-#endif //LPF_SWITCHING_DL2MAN_USDX_REV3_NOLATCH
-#else //LPF_SWITCHING_DL2MAN_USDX_REV2 LPF_SWITCHING_DL2MAN_USDX_REV2_BETA
-  uint8_t lpf_io = (f > 12) ? IO0_3 : (f > 8) ? IO0_5 : (f > 5) ? IO0_7 : (f > 4) ? IO1_1 : /*(f <= 4)*/ IO1_3; // cut-off freq in MHz to IO port of LPF relay
-  if(prev_lpf_io != lpf_io){ set_latch(prev_lpf_io, IO0_1, false); set_latch(lpf_io, IO0_1); prev_lpf_io = lpf_io; };  // set relay
-
+#ifndef LPF_SWITHCHING_TRUSDX
+  #ifdef LPF_SWITCHING_DL2MAN_USDX_REV3
+    uint8_t lpf_io = (f > 26) ? IO1_3 : (f > 20) ? IO1_4 : (f > 17) ? IO1_2 : (f > 12) ? IO1_5 : (f > 8) ? IO1_1 : (f > 5) ? IO1_6 : (f > 4) ? IO1_0 : /*(f <= 4)*/ IO1_7; // cut-off freq in MHz to IO port of LPF relay
+  #ifndef LPF_SWITCHING_DL2MAN_USDX_REV3_NOLATCH
+    if(prev_lpf_io != lpf_io){ set_latch(prev_lpf_io, IO0_0, false); set_latch(lpf_io, IO0_0); prev_lpf_io = lpf_io; };  // set relay (latched)
+  #else
+    if(prev_lpf_io != lpf_io){ ioext.write(1U << lpf_io); prev_lpf_io = lpf_io; };  // set relay (non-latched)
+  #endif //LPF_SWITCHING_DL2MAN_USDX_REV3_NOLATCH
+  #else //LPF_SWITCHING_DL2MAN_USDX_REV2 LPF_SWITCHING_DL2MAN_USDX_REV2_BETA
+    uint8_t lpf_io = (f > 12) ? IO0_3 : (f > 8) ? IO0_5 : (f > 5) ? IO0_7 : (f > 4) ? IO1_1 : /*(f <= 4)*/ IO1_3; // cut-off freq in MHz to IO port of LPF relay
+    if(prev_lpf_io != lpf_io){ set_latch(prev_lpf_io, IO0_1, false); set_latch(lpf_io, IO0_1); prev_lpf_io = lpf_io; };  // set relay
+  #endif
+#else //LPF_SWITHCHING_TRUSDX
+  uint8_t lpf_io = (f > 12) ? IO1_3 : (f > 8) ? IO1_2 : (f > 5) ? IO1_4 : (f > 4) ? IO1_1 : /*(f <= 4)*/ IO1_5; // cut-off freq in MHz to IO port of LPF relay
+  if(prev_lpf_io != lpf_io){ set_latch(prev_lpf_io, IO0_0, false); set_latch(lpf_io, IO0_0); prev_lpf_io = lpf_io; };  // set relay
 #endif
 }
 #endif  //LPF_SWITCHING_DL2MAN_USDX_REV3 LPF_SWITCHING_DL2MAN_USDX_REV2 REV2_BETA
@@ -1926,7 +1956,7 @@ inline void set_lpf(uint8_t f){
 }
 #endif  //LPF_SWITCHING_PE1DDA_USDXDUO
 
-#if !defined(LPF_SWITCHING_DL2MAN_USDX_REV1) && !defined(LPF_SWITCHING_DL2MAN_USDX_REV2_BETA) && !defined(LPF_SWITCHING_DL2MAN_USDX_REV2) && !defined(LPF_SWITCHING_DL2MAN_USDX_REV3) && !defined(LPF_SWITCHING_WB2CBA_USDX_OCTOBAND) && !defined(LPF_SWITCHING_PE1DDA_USDXDUO)
+#if !defined(LPF_SWITCHING_DL2MAN_USDX_REV1) && !defined(LPF_SWITCHING_DL2MAN_USDX_REV2_BETA) && !defined(LPF_SWITCHING_DL2MAN_USDX_REV2) && !defined(LPF_SWITCHING_DL2MAN_USDX_REV3) && !defined(LPF_SWITCHING_WB2CBA_USDX_OCTOBAND) && !defined(LPF_SWITCHING_PE1DDA_USDXDUO) && !defined(LPF_SWITHCHING_TRUSDX)
 inline void set_lpf(uint8_t f){} // dummy
 #endif
 
@@ -3949,20 +3979,31 @@ void calibrate_iq()
 #endif
 #endif //QCX
 
-uint8_t prev_bandval = 3;
-uint8_t bandval = 3;
-#define N_BANDS 11
-
-#ifdef CW_FREQS_QRP
-uint32_t band[N_BANDS] = { /*472000,*/ 1810000, 3560000, 5351500, 7030000, 10106000, 14060000, 18096000, 21060000, 24906000, 28060000, 50096000/*, 70160000, 144060000*/ };  // CW QRP freqs
+uint8_t prev_bandval = 1;
+uint8_t bandval = 1;
+#ifndef LPF_SWITHCHING_TRUSDX
+  #define N_BANDS 11
+  #ifdef CW_FREQS_QRP
+    uint32_t band[N_BANDS] = { /*472000,*/ 1810000, 3560000, 5351500, 7030000, 10106000, 14060000, 18096000, 21060000, 24906000, 28060000, 50096000/*, 70160000, 144060000*/ };  // CW QRP freqs
+  #else
+    #ifdef CW_FREQS_FISTS
+      uint32_t band[N_BANDS] = { /*472000,*/ 1818000, 3558000, 5351500, 7028000, 10118000, 14058000, 18085000, 21058000, 24908000, 28058000, 50058000/*, 70158000, 144058000*/ };  // CW FISTS freqs
+    #else
+      uint32_t band[N_BANDS] = { /*472000,*/ 1840000, 3573000, 5357000, 7074000, 10136000, 14074000, 18100000, 21074000, 24915000, 28074000, 50313000/*, 70101000, 144125000*/ };  // FT8 freqs
+    #endif
+  #endif
 #else
-#ifdef CW_FREQS_FISTS
-uint32_t band[N_BANDS] = { /*472000,*/ 1818000, 3558000, 5351500, 7028000, 10118000, 14058000, 18085000, 21058000, 24908000, 28058000, 50058000/*, 70158000, 144058000*/ };  // CW FISTS freqs
-#else
-uint32_t band[N_BANDS] = { /*472000,*/ 1840000, 3573000, 5357000, 7074000, 10136000, 14074000, 18100000, 21074000, 24915000, 28074000, 50313000/*, 70101000, 144125000*/ };  // FT8 freqs
+  #define N_BANDS 11
+  #ifdef CW_FREQS_QRP
+    uint32_t band[N_BANDS] = {3560000, 5351500, 7030000, 10106000, 14060000};  // CW QRP freqs
+  #else
+    #ifdef CW_FREQS_FISTS
+      uint32_t band[N_BANDS] = {3558000, 5351500, 7028000, 10118000, 14058000};  // CW FISTS freqs
+    #else
+      uint32_t band[N_BANDS] = {3573000, 5357000, 7074000, 10136000, 14074000};  // FT8 freqs
+    #endif
+  #endif
 #endif
-#endif
-
 enum step_t { STEP_10M, STEP_1M, STEP_500k, STEP_100k, STEP_10k, STEP_1k, STEP_500, STEP_100, STEP_10, STEP_1 };
 uint32_t stepsizes[10] = { 10000000, 1000000, 500000, 100000, 10000, 1000, 500, 100, 10, 1 };
 volatile uint8_t stepsize = STEP_1k;
@@ -4224,7 +4265,11 @@ const char* filt_label[N_FILT+1] = { "Full", "3000", "2400", "1800", "500", "200
 #else
 const char* filt_label[N_FILT+1] = { "Full", "2400", "2000", "1500", "500", "200", "100", "50" };
 #endif
-const char* band_label[N_BANDS] = { "160m", "80m", "60m", "40m", "30m", "20m", "17m", "15m", "12m", "10m", "6m" };
+#ifdef LPF_SWITHCHING_TRUSDX
+  const char* band_label[N_BANDS] = { "80m", "60m", "40m", "30m", "20m"};
+#else
+  const char* band_label[N_BANDS] = { "160m", "80m", "60m", "40m", "30m", "20m", "17m", "15m", "12m", "10m", "6m" };
+#endif
 const char* stepsize_label[] = { "10M", "1M", "0.5M", "100k", "10k", "1k", "0.5k", "100", "10", "1" };
 const char* att_label[] = { "0dB", "-13dB", "-20dB", "-33dB", "-40dB", "-53dB", "-60dB", "-73dB" };
 #ifdef CLOCK
